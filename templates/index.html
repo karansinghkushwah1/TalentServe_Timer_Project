@@ -1,0 +1,149 @@
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home page</title>
+  </head>
+  <body>
+    welcome {{request.user}}
+    <h3>Login Time: {{ login_time }}</h3>
+    <h3>Logout Time: {{ logout_time }}</h3>
+    <p> This is project created while interning for talentserve
+    <a href="/logout">Logout</a>
+  </body>
+</html> {% endcomment %}
+
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+      body {
+        background-color: #1D2F6F;
+        text-align: center;
+      }
+      .navbar-brand img {
+        height: 60px; /* Adjust the height as needed */
+        width: auto;
+      }
+      h1{
+        
+        color: white;
+        margin: 5rem;
+      }
+      h2{
+        
+        color: grey;
+        margin: 1rem;
+      }
+      p{
+        
+        color: grey;
+        margin: 1rem;
+      }
+      footer {
+        position:fixed;
+        left:0px;
+        right:0px;
+        bottom:0px;
+        color: #f1f1f1;
+        height: 60px;
+        text-align: center;
+        padding: 12px;
+      }
+
+    </style>
+    <script>
+        function logoutConfirmation() {
+            //var loginTime = new Date('{{ login_time|date:"d/m/Y h:i:s A"|lower}}');
+            //var loginTime = '{{ login_time|date:"d/m/Y h:i:s A"|lower}}';
+            var loginTime = new Date('{{ login_time|date:"Y-m-d H:i:s" }}');
+            
+            var logoutTime = new Date();
+
+             // Format the login and logout times
+    var formattedLoginTime = loginTime.toLocaleString('en-US', { 
+      year: 'numeric', 
+      month: '2-digit', 
+      day: '2-digit', 
+      hour: '2-digit', 
+      minute: '2-digit', 
+      second: '2-digit',
+      hour12: true
+    });
+    var formattedLogoutTime = logoutTime.toLocaleString('en-US', { 
+        year: 'numeric', 
+        month: '2-digit', 
+        day: '2-digit', 
+        hour: '2-digit', 
+        minute: '2-digit', 
+        second: '2-digit',
+        hour12: true
+    });
+            
+
+
+            // Calculate the duration in milliseconds
+            var durationInMilliseconds = logoutTime - loginTime;
+
+            // Convert the duration to a human-readable format
+            var durationInSeconds = Math.floor(durationInMilliseconds / 1000);
+            var durationInMinutes = Math.floor(durationInSeconds / 60);
+            var durationInHours = Math.floor(durationInMinutes / 60);
+
+            // Format the duration as HH:MM:SS
+            var formattedDuration = padNumber(durationInHours) + ':' + padNumber(durationInMinutes % 60) + ':' + padNumber(durationInSeconds % 60);
+
+            var message = "Login Time: " + formattedLoginTime + "\nLogout Time: " + formattedLogoutTime +"\nYour Duration is : " + formattedDuration;
+            var confirmLogout = confirm(message);
+
+            if (confirmLogout) {
+                window.location.href = "/logout";
+            }
+        }
+        function padNumber(number) {
+          return number < 10 ? '0' + number : number;
+        }
+    </script>
+</head>
+<body >
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #1D2F6F;" id="navcustom">
+    <a class="navbar-brand" href="/">
+        <img src="/static/talentservelogo.png" alt="Logo">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/" style="color:white;">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/login" style="color:white;">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin" style="color:white;">Admin</a>
+            </li>
+        </ul>
+    </div>
+  </nav> 
+    <h1><B><i>Welcome to the Home Page</h1>
+    <h2> This is demo page </h2>
+    <p> Press Below button to Logout and see your time</i></p>
+    <button id = 'button' class="btn btn-outline-success" onclick="logoutConfirmation()">Logout</button>
+    <footer>
+      <span>Copyright © TalentServe 2022. All rights reserved</span>
+    </footer>
+</body>
+</html>
+
+
